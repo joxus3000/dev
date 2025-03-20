@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const db = require("./config/db");
 
 exports.createAccount = async (email, hashedPassword, role) => {
   const [result] = await db.query(
