@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const cors = require("cors");
-const db = require("./config/db"); // Ensure the correct relative path
+const db = require("../config/db"); // Ensure the correct relative path
 const authRoutes = require("./routes/authRoutes"); // Move auth routes to a separate file
 const doctorRoutes = require("./routes/doctorsRoute");
 // const patientRoutes = require("./routes/patientsRoute");
