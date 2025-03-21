@@ -25,3 +25,16 @@ exports.getAppointments = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+exports.getAppointment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [appointment] = await db.query("SELECT * FROM Appointment WHERE id = ?", [id]);
+    if (appointment.length === 0) {
+      return res.status(404).json({ error: "Appointment not found" });
+    }
+    res.json({ appointment: appointment[0] });
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+}

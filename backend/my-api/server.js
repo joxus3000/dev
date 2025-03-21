@@ -4,6 +4,7 @@ const cors = require("cors");
 const db = require("../config/db"); // Ensure the correct relative path
 const authRoutes = require("./routes/authRoutes"); // Move auth routes to a separate file
 const doctorRoutes = require("./routes/doctorsRoute");
+const AppointmentRoutes = require("./routes/AppointmentsRoute");
 // const patientRoutes = require("./routes/patientsRoute");
 
 const app = express();
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 // ✅ Routes
 app.use("/auth", authRoutes); // Now auth routes are separate
 app.use("/doctors", doctorRoutes);
+app.use("/Appointments",AppointmentRoutes );
 // app.use("/patients", patientRoutes);
 
 
