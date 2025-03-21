@@ -7,36 +7,27 @@ const JWT_SECRET = "your_jwt_secret";
 
 exports.register = async (req, res) => {
     try {
-      console.log("🟢 Register endpoint hit with data:", req.body);
-      const db = global.db;  // Ensure `db` is available
-      if (!db) {
-        console.error("❌ Database connection is undefined!");
-        return res.status(500).json({ error: "Database connection error" });
-      }
-  
-      const { fullName, username, password } = req.body;
-      console.log("❌ Missing fields in request");
-      if (!fullName || !username || !password) {
-        return res.status(400).json({ error: "Full name, username, and password are required" });
-      }
+        console.log("🟢 Register endpoint hit with data:", req.body);
 
-  
-      const hashedPassword = await bcrypt.hash(password, 10);
-      console.log("🔒 Hashed password:", hashedPassword);
-  
-      const [result] = await db.query(
-        "INSERT INTO Account (full_name, username, password) VALUES (?, ?, ?)", 
-        [fullName, username, hashedPassword]
-      );
-  
-      console.log("✅ User registered, ID:", result.insertId);
-      res.json({ message: "✅ Account created", account_id: result.insertId });
-    } catch (err) {
-      console.error("❌ Registration error:", err.message);
-      res.status(500).json({ error: "Internal server error", details: err.message });
+        const { email, password, role } = req.body;
+
+        // Validate input
+        if (!email || !password || !role) {
+            return res.status(400).json({ error: "All fields are required" });
+        }
+
+        // Insert user into the database
+        const [result] = await db.query(
+            "INSERT INTO users (email, password, role) VALUES (?, ?, ?)",
+            [email, password, role]
+        );
+
+        res.status(201).json({ message: "User registered successfully", userId: result.insertId });
+    } catch (error) {
+        console.error("❌ Error in register:", error.message);
+        res.status(500).json({ error: "Internal server error" });
     }
-  };
-  
+};
 
 exports.login = async (req, res) => {
   try {
