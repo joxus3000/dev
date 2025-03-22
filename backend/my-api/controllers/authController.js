@@ -18,7 +18,7 @@ exports.register = async (req, res) => {
 
         // Insert user into the database
         const [result] = await db.query(
-            "INSERT INTO users (email, password, role) VALUES (?, ?, ?)",
+            "INSERT INTO user (email, password, role) VALUES (?, ?, ?)",
             [email, password, role]
         );
 
